@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 
 export default function App() {
   const [clicks, setClicks] = useState(0);
+  const [upgrade1, setUpgrade1] = useState(0);
 
   const handleClicks = () => {
     setClicks(clicks + 1);
@@ -11,13 +12,16 @@ export default function App() {
 
   const handleUpgrade1 = () => {
     if (clicks >= 10) {
-      setClicks(clicks - 10);
-      setInterval(() => {
-        // Define what (clicks) => clicks + 1 is doing
-        setClicks((clicks) => clicks + 1);
-      }, 1000);
+      setUpgrade1(upgrade1 + 1);
     }
   };
+
+  useEffect(() => {
+    setClicks(clicks - 10);
+    setInterval(() => {
+      setClicks(clicks + 1);
+    }, 1000);
+  }, [upgrade1]);
 
   return (
     <View style={styles.container}>
@@ -25,7 +29,7 @@ export default function App() {
       <Pressable onPress={handleClicks} className="bg-black w-40 h-10">
         <Text className="text-white text-center">Click me</Text>
       </Pressable>
-      <Pressable onPress={handleUpgrade1} className="bg-black w-40 h-10 m-5">
+      <Pressable onPress={handleUpgrade1} className="bg-black w-40 h-10 m-3">
         <Text className="text-white text-center">1 click per second</Text>
         <Text className="text-white text-center">Upgrade Price: 10</Text>
       </Pressable>
